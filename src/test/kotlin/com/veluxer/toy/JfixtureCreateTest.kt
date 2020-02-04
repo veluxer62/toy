@@ -71,8 +71,16 @@ internal class JfixtureCreateTest {
             val classField: Bar,
             val objectField: Any,
             val mapField: Map<String, String>,
-            val listField: List<String>
+            val listField: List<String>,
+            val enumField: BazEnum
     )
+
+    enum class BazEnum{
+        A,
+        B,
+        C,
+        D
+    }
 
     interface Qux {
         fun action(): String
