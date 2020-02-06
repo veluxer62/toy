@@ -23,6 +23,7 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
 	}
+	testImplementation("org.junit.jupiter:junit-jupiter-params:5.2.0")
 }
 
 tasks.withType<Test> {
