@@ -1,4 +1,4 @@
-package com.veluxer;
+package com.veluxer.lesson1.binaryGap;
 
 public class Solution {
     public int solution(int decimalNumber) {

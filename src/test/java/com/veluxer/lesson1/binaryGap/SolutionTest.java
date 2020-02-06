@@ -1,4 +1,4 @@
-package com.veluxer;
+package com.veluxer.lesson1.binaryGap;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
