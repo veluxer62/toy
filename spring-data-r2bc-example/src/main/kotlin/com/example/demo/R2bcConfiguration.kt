@@ -1,7 +1,8 @@
 package com.example.demo
 
-import io.r2dbc.postgresql.PostgresqlConnectionConfiguration
-import io.r2dbc.postgresql.PostgresqlConnectionFactory
+import io.r2dbc.h2.H2ConnectionConfiguration
+import io.r2dbc.h2.H2ConnectionFactory
+import io.r2dbc.h2.H2ConnectionOption
 import io.r2dbc.spi.ConnectionFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -17,13 +18,10 @@ import org.springframework.transaction.ReactiveTransactionManager
 @EnableR2dbcRepositories
 class R2bcConfiguration : AbstractR2dbcConfiguration() {
     @Bean
-    override fun connectionFactory() = PostgresqlConnectionFactory(
-        PostgresqlConnectionConfiguration.builder()
-            .host("127.0.0.1")
-            .port(5432)
-            .database("postgres")
-            .username("postgres")
-            .password("1123")
+    override fun connectionFactory() = H2ConnectionFactory(
+        H2ConnectionConfiguration.builder()
+            .inMemory("...")
+            .property(H2ConnectionOption.DB_CLOSE_DELAY, "-1")
             .build()
     )
 
