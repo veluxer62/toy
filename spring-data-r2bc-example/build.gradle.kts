@@ -23,7 +23,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("org.springframework.data:spring-data-r2dbc:1.0.0.RELEASE")
-    implementation("io.r2dbc:r2dbc-postgresql:0.8.0.RELEASE")
+    implementation("io.r2dbc:r2dbc-h2:0.8.3.RELEASE")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
