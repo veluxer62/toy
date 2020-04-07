@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
-import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
@@ -22,8 +21,7 @@ import java.util.*
 import kotlin.random.Random
 
 @ExtendWith(SpringExtension::class)
-@ContextConfiguration(classes = [Routes::class, PersonHandler::class, PersonRepository::class])
-@WebFluxTest
+@WebFluxTest(Routes::class, PersonHandler::class)
 internal class PersonRouteTest {
     @Autowired
     private lateinit var client: WebTestClient
