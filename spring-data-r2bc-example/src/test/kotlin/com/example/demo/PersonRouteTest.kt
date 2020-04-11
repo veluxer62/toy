@@ -21,7 +21,7 @@ import java.util.*
 import kotlin.random.Random
 
 @ExtendWith(SpringExtension::class)
-@WebFluxTest(Routes::class, PersonHandler::class)
+@WebFluxTest(PersonController::class)
 internal class PersonRouteTest {
     @Autowired
     private lateinit var client: WebTestClient
