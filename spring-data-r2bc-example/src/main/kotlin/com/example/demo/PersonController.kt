@@ -1,19 +1,20 @@
 package com.example.demo
 
-import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import reactor.kotlin.core.publisher.switchIfEmpty
+import java.net.URI
 
 @RestController
 @RequestMapping("/persons")
 class PersonController(private val repository: PersonRepository) {
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody person: Person) {
-        repository.save(person).subscribe()
+    fun create(@RequestBody requestBody: Mono<Person>): Mono<ResponseEntity<Unit>> {
+        return requestBody
+            .flatMap { repository.save(it) }
+            .map { ResponseEntity.created(URI.create("/persons")).build<Unit>() }
     }
 
     @GetMapping
@@ -22,35 +23,37 @@ class PersonController(private val repository: PersonRepository) {
     }
 
     @GetMapping("/{id}")
-    fun findById(@PathVariable("id") id: Long): Mono<Person> {
+    fun findById(@PathVariable("id") id: Long): Mono<ResponseEntity<Person>> {
         return repository.findById(id)
-            .switchIfEmpty {
-                throw IllegalArgumentException()
-            }
+            .map { ResponseEntity.ok(it) }
+            .defaultIfEmpty(ResponseEntity.badRequest().build())
     }
 
     @PutMapping("/{id}")
-    fun update(@PathVariable("id") id: Long, @RequestBody person: Person) {
-        repository.existsById(id)
-            .map {
-                if (!it) throw IllegalArgumentException()
+    fun update(@PathVariable("id") id: Long, @RequestBody requestBody: Mono<Person>): Mono<ResponseEntity<Unit>> {
+        return repository.existsById(id)
+            .zipWith(requestBody)
+            .flatMap {
+                if (it.t1)
+                    Mono.just(it.t2.copy(id = id))
+                else
+                    Mono.empty()
             }
-            .subscribe(
-                { repository.save(person.copy(id = id)) },
-                { throw IllegalArgumentException(it) }
-            )
+            .flatMap { repository.save(it) }
+            .map { ResponseEntity.ok().build<Unit>() }
+            .defaultIfEmpty(ResponseEntity.badRequest().build())
     }
 
     @DeleteMapping("/{id}")
-    fun delete(@PathVariable("id") id: Long) {
-        repository.existsById(id)
-            .map {
-                if (!it) throw IllegalArgumentException()
+    fun delete(@PathVariable("id") id: Long): Mono<ResponseEntity<Unit>> {
+        return repository.existsById(id)
+            .flatMap {
+                if (it)
+                    repository.deleteById(id)
+                        .then(Mono.just(ResponseEntity.ok().build<Unit>()))
+                else
+                    Mono.just(ResponseEntity.badRequest().build())
             }
-            .subscribe(
-                { repository.deleteById(id) },
-                { throw IllegalArgumentException(it) }
-            )
     }
 
 }
