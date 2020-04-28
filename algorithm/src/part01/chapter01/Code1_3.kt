@@ -1,4 +1,4 @@
-package part01.chapter01.section01
+package part01.chapter01
 
 fun main() {
     for (i in 0..2) {
