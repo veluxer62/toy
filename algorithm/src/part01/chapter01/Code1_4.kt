@@ -1,4 +1,4 @@
-package part01.chapter01.section01
+package part01.chapter01
 
 import java.util.*
 
@@ -12,22 +12,10 @@ fun main() {
     print("찾을 값을 입력하세요 => ")
     val input = Scanner(System.`in`).nextInt()
 
-    var min = 0
-    var max = 1000
-    var i = (max + min) / 2
-
-    while (min <= max) {
+    for (i in 0..999) {
         if (input == data[i]) {
             println("찾으려고 하는 값은 배열 data의 ${i}번째에 있군요")
             break
         }
-        else if (input < data[i]) {
-            max = (max + min) / 2 - 1
-        }
-        else {
-            min = (max + min) / 2 + 1
-        }
-
-        i = (max + min) / 2
     }
 }
