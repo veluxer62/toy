@@ -22,6 +22,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5")
 }
 
 tasks.withType<Test> {
