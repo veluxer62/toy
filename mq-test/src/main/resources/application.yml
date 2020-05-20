@@ -1,0 +1,10 @@
+server:
+  port: 8888
+spring:
+  jms:
+    pub-sub-domain: true
+  activemq:
+    broker-url: vm://embedded?broker.persistent=true&broker.useShutdownHook=false&broker.schedulerSupport=true
+#    broker-url: ssl://b-44037a98-73fc-4c5d-ad9b-7000f17ec17d-1.mq.ap-northeast-2.amazonaws.com:61617
+#    user: test
+#    password: test
